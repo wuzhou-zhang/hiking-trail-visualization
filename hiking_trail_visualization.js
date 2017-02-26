@@ -18,13 +18,23 @@ $.getScript('togeojson.js', function () {
         console.log(data['numTrails']);
         for (var i = 0; i < data['numTrails']; i++) {
             var trail = data[i];
-            console.log(i + ": " + trail);
             $.ajax('data/' + trail).done(function(gpx) {
                 // The first argument of toGeoJSON.gpx(...) must be a GPX document as an XML DOM - not as a string.
                 var geoJSON = toGeoJSON.gpx(toDOM(gpx));
                 L.geoJSON(geoJSON).addTo(map);
+                startPoint = getHikeStartPoint(geoJSON);
+                hikeName = getHikeName(geoJSON);
+                L.marker([startPoint[1], startPoint[0]]).addTo(map)
+                    .bindPopup(hikeName);
             });
         }
     });
 });
 
+function getHikeStartPoint(geoJSON) {
+    return geoJSON["features"][0]["geometry"]["coordinates"][0];
+}
+
+function getHikeName(geoJSON) {
+    return geoJSON["features"][0]["properties"]["name"];
+}
