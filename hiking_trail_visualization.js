@@ -13,11 +13,18 @@ function toDOM(_) {
 }
 
 $.getScript('togeojson.js', function () {
-	$.ajax('data/Fremont_Older_Open_Space_Preserve_Hike.gpx').done(function(gpx) {
-        // The first argument of toGeoJSON.gpx(...) must be a GPX document as an XML DOM - not as a string.
-        var geoJSON = toGeoJSON.gpx(toDOM(gpx));
-        console.log(geoJSON);
-        L.geoJSON(geoJSON).addTo(map);
-	});
+    $.getJSON('trails.json', function(data) {
+        console.debug(data);
+        console.log(data['numTrails']);
+        for (var i = 0; i < data['numTrails']; i++) {
+            var trail = data[i];
+            console.log(i + ": " + trail);
+            $.ajax('data/' + trail).done(function(gpx) {
+                // The first argument of toGeoJSON.gpx(...) must be a GPX document as an XML DOM - not as a string.
+                var geoJSON = toGeoJSON.gpx(toDOM(gpx));
+                L.geoJSON(geoJSON).addTo(map);
+            });
+        }
+    });
 });
 
