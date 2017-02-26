@@ -24,8 +24,9 @@ $.getScript('togeojson.js', function () {
                 L.geoJSON(geoJSON).addTo(map);
                 startPoint = getHikeStartPoint(geoJSON);
                 hikeName = getHikeName(geoJSON);
+                hikeTime = getHikeTime(geoJSON);
                 L.marker([startPoint[1], startPoint[0]]).addTo(map)
-                    .bindPopup(hikeName);
+                    .bindPopup("<b>" + hikeName + "</b><br>" + hikeTime);
             });
         }
     });
@@ -37,4 +38,8 @@ function getHikeStartPoint(geoJSON) {
 
 function getHikeName(geoJSON) {
     return geoJSON["features"][0]["properties"]["name"];
+}
+
+function getHikeTime(geoJSON) {
+    return geoJSON["features"][0]["properties"]["time"].replace("T", " ").replace("Z", "\n");
 }
