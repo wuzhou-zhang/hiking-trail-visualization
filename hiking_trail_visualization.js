@@ -7,6 +7,21 @@ var map = new mapboxgl.Map({
 var nav = new mapboxgl.NavigationControl();
 map.addControl(nav, 'top-left');
 
+function toDOM(_) {
+    if (typeof DOMParser === 'undefined') {
+        return (new xmldom.DOMParser()).parseFromString(_.toString());
+    } else {
+        return (new DOMParser()).parseFromString(_, 'text/xml');
+    }
+}
+
+$.getScript('togeojson.js', function () {
+	$.ajax('data/Fremont_Older_Open_Space_Preserve_Hike.gpx').done(function(gpx) {
+        // The first argument of toGeoJSON.gpx(...) must be a GPX document as an XML DOM - not as a string.
+        console.log(toGeoJSON.gpx(toDOM(gpx)));
+	});
+});
+
 map.on('load', function () {
     map.addLayer({
         "id": "route",
