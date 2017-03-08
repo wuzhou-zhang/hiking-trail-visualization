@@ -12,6 +12,7 @@ function toDOM(_) {
     }
 }
 
+$.getScript('moment.min.js', function () {
 $.getScript('togeojson.js', function () {
     $.getJSON('trails.json', function(data) {
         console.debug(data);
@@ -22,14 +23,15 @@ $.getScript('togeojson.js', function () {
                 // The first argument of toGeoJSON.gpx(...) must be a GPX document as an XML DOM - not as a string.
                 var geoJSON = toGeoJSON.gpx(toDOM(gpx));
                 L.geoJSON(geoJSON).addTo(map);
-                startPoint = getHikeStartPoint(geoJSON);
-                hikeName = getHikeName(geoJSON);
-                hikeTime = getHikeTime(geoJSON);
+                var startPoint = getHikeStartPoint(geoJSON);
+                var hikeName = getHikeName(geoJSON);
+                var hikeTime = getHikeTime(geoJSON); // In PST
                 L.marker([startPoint[1], startPoint[0]]).addTo(map)
                     .bindPopup("<b>" + hikeName + "</b><br>" + hikeTime);
             });
         }
     });
+});
 });
 
 function getHikeStartPoint(geoJSON) {
@@ -41,5 +43,8 @@ function getHikeName(geoJSON) {
 }
 
 function getHikeTime(geoJSON) {
-    return geoJSON["features"][0]["properties"]["time"].replace("T", " ").replace("Z", "\n");
+    var hikeTimeInUTC = geoJSON["features"][0]["properties"]["time"].replace("T", " ").replace("Z", "");
+    var hikeTime = moment(hikeTimeInUTC);
+    hikeTime.subtract('hours', 8); // The offset between PST and UTC is 8 hours
+    return hikeTime.format('YYYY-MM-DD HH:mm:ss');
 }
