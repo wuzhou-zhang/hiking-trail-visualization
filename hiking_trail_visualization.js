@@ -16,8 +16,9 @@ $.getScript('moment.min.js', function () {
 $.getScript('togeojson.js', function () {
     $.getJSON('trails.json', function(data) {
         console.debug(data);
-        console.log(data['numTrails']);
-        for (var i = 0; i < data['numTrails']; i++) {
+        var numTrails = data['numTrails'];
+        document.getElementById('caption').innerHTML = "Wuzhou's " + numTrails + " Hikes in Bay Area (and Beyond)";
+        for (var i = 0; i < numTrails; i++) {
             var trail = data[i];
             $.ajax('data/' + trail).done(function(gpx) {
                 // The first argument of toGeoJSON.gpx(...) must be a GPX document as an XML DOM - not as a string.
