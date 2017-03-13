@@ -12,6 +12,11 @@ function toDOM(_) {
     }
 }
 
+L.marker([38.5376, -122.5788]).addTo(map)
+    .bindPopup("<b>Upcoming: Saturday 3pm at Napa Valley</b>");
+
+
+
 $.getScript('moment.min.js', function () {
 $.getScript('togeojson.js', function () {
     $.getJSON('trails.json', function(data) {
