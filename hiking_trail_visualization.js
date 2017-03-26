@@ -12,8 +12,8 @@ function toDOM(_) {
     }
 }
 
-L.marker([38.5376, -122.5788]).addTo(map)
-    .bindPopup("<b>Upcoming: Saturday 3pm at Napa Valley</b>");
+L.marker([37.429146, -121.979109]).addTo(map)
+    .bindPopup("<font size='2'<b>Upcoming: Saturday 2pm Alviso Marina Trail</b></font>");
 
 
 
