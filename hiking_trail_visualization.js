@@ -12,8 +12,8 @@ function toDOM(_) {
     }
 }
 
-L.marker([37.429146, -121.979109]).addTo(map)
-    .bindPopup("<font size='2'<b>Upcoming: Saturday 2pm Alviso Marina Trail</b></font>");
+L.marker([37.666090, -122.494576]).addTo(map)
+    .bindPopup("<b>Upcoming: Saturday 2pm Coastal Hike from Mussel Rock to Cliff House</b>");
 
 
 
