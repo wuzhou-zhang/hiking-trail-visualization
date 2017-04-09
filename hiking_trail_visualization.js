@@ -12,8 +12,8 @@ function toDOM(_) {
     }
 }
 
-L.marker([37.666090, -122.494576]).addTo(map)
-    .bindPopup("<b>Upcoming: Saturday 2pm Coastal Hike from Mussel Rock to Cliff House</b>");
+L.marker([37.714592, -122.102062]).addTo(map)
+    .bindPopup("<b>Upcoming: Saturday 2pm Lake Chabot Regional Park</b>");
 
 
 
