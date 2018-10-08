@@ -7,7 +7,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 data_dir = os.path.join(script_dir, 'data')
 gpx_files = glob.glob(os.path.join(data_dir, '*.gpx'))
 
-gpx_files = gpx_files[:1]
+# gpx_files = gpx_files[:1]
 
 num_trails = len(gpx_files)
 json_content = {'numTrails': num_trails}
@@ -19,7 +19,7 @@ if not os.path.exists(json_data_dir):
 
 for idx, gpx_file in enumerate(gpx_files):
     print gpx_file
-    trail = os.path.basename(gpx_file)
+    trail = os.path.basename(gpx_file)[:-4]
     print "{}: {}".format(idx, trail)
     json_content[idx] = trail
 
@@ -35,7 +35,7 @@ for idx, gpx_file in enumerate(gpx_files):
             #'startTime': start_time,
             'trace': [[point.latitude, point.longitude] for point in data_points]
         }
-        with open(os.path.join(json_data_dir, trail[:-3] + 'json'), 'w') as f:
+        with open(os.path.join(json_data_dir, trail + '.json'), 'w') as f:
             json.dump(json_data, f)
 
 json_file = 'trails_index.json'
